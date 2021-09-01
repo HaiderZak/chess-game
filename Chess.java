@@ -229,6 +229,26 @@ public class Chess extends Canvas implements Runnable, MouseListener {
 
 	public void tick() {
 		if(gameState == STATE.PLAYING) {
+			for(int i=0; i<handler.object.size(); i++){
+				if(handler.object.get(i).getClass().getName().equals("Pawn")){
+					Object obj = Piece.class.cast(handler.object.get(i));
+					Pawn p = (Pawn) obj;
+					if(p.getColor().equals("W") && p.getY() == 0){
+						int x = p.getX();
+						int y = p.getY();
+						handler.removeObject(p);
+						handler.addObject(new Queen(handler, this, "W", x, y));
+					}
+					if(p.getColor().equals("B") && p.getY() == 7){
+						int x = p.getX();
+						int y = p.getY();
+						handler.removeObject(p);
+						handler.addObject(new Queen(handler, this, "B", x, y));
+					}
+				}
+			}
+
+			//Check for white checkmate
 			if(whiteInCheck){
 				boolean flag = false;
 				for(int i=0; i<handler.object.size(); i++){
@@ -256,6 +276,7 @@ public class Chess extends Canvas implements Runnable, MouseListener {
 					whiteCheckmated = false;
 				}
 			}
+			//Check for black checkmate
 			if(blackInCheck){
 				boolean flag = false;
 				for(int i=0; i<handler.object.size(); i++){
@@ -267,7 +288,7 @@ public class Chess extends Canvas implements Runnable, MouseListener {
 							handler.object.get(i).setX(legalMoves.get(j).get(0));
 							handler.object.get(i).setY(legalMoves.get(j).get(1));
 							isBlackInCheck();
-							if(!whiteInCheck){
+							if(!blackInCheck){
 								flag = true;
 								break;
 							}
@@ -482,7 +503,6 @@ public class Chess extends Canvas implements Runnable, MouseListener {
 
 					for(int i=0; i<handler.object.size(); i++){
 						if(pair != null && handler.object.get(i).getColor().equals("B") && handler.object.get(i).getX() == pair[0] && handler.object.get(i).getY() == pair[1]){
-
 							t = true;
 							List<List<Integer>> legalMoves = handler.object.get(i).legalMoves();
 							for(int j=0; j<legalMoves.size(); j++){
@@ -553,7 +573,7 @@ public class Chess extends Canvas implements Runnable, MouseListener {
 				}
 			}
 		handler.render(g);
-		
+
 		g.setColor(tan);
 		g.setFont(new Font("Arial", Font.PLAIN, 35)); 
 		if(blackCheckmated){
