@@ -7,7 +7,7 @@ This is a fully java-based chess game developed using the native Java AWT librar
 # HOW TO INSTALL
 
 ``` 
-$ git clone https://github.com/HaiderZak/chess.git
+$ git clone https://github.com/HaiderZak/chess-game.git
 
 $ run chess.jar
 ```
