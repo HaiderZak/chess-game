@@ -4,6 +4,9 @@ This is a fully java-based chess game developed using the native Java AWT librar
 
 ![menu2](https://user-images.githubusercontent.com/37321974/131909597-c2f707c1-e36c-4d9d-8d81-f16989e95ae9.png)
 
+https://user-images.githubusercontent.com/37321974/132262534-2372f501-b1d2-4a3c-8433-da495e279d62.mp4
+
+
 # HOW TO INSTALL
 
 ``` 
