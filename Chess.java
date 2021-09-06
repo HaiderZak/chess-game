@@ -41,14 +41,7 @@ public class Chess extends Canvas implements Runnable, MouseListener {
 		new Main(this);
 		addMouseListener(this);
 		handler = new Handler();
-		if(gameState == STATE.MENU) {
-			URL resource = getClass().getResource("menu.png");
-			try {
-				image = ImageIO.read(resource);
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-		}
+		initBoard();
 	}
 
 	public void initBoard() {
@@ -133,14 +126,6 @@ public class Chess extends Canvas implements Runnable, MouseListener {
 		return blockWidth;
 	}
 
-	public enum STATE {
-		MENU,
-		PLAYING,
-		GAMEOVER
-	}
-
-	public STATE gameState = STATE.MENU;
-
 
 	public int getRandomNumber(int min, int max) {
 		return (int) ((Math.random() * (max - min)) + min);
@@ -150,17 +135,7 @@ public class Chess extends Canvas implements Runnable, MouseListener {
 	}
 
 	public void mousePressed(MouseEvent e) {
-		if(gameState == STATE.MENU) {
-			initBoard();
-			if(e.getX() >= 237 && e.getX() <= 470 && e.getY() >= 334 && e.getY() <= 380) {
-				gameState = STATE.PLAYING;
-			}
-			if(e.getX() >= 237 && e.getX() <= 470 && e.getY() >= 400 && e.getY() <= 446) {
-				System.exit(0);
-			}
-		}
-		else {
-			if(clicked == true){
+		if(clicked == true){
 				selectedBox[0] = e.getX();
 				selectedBox[1] = e.getY();
 				newPair = getBlockFromMouse(selectedBox[0], selectedBox[1]);
@@ -174,8 +149,7 @@ public class Chess extends Canvas implements Runnable, MouseListener {
 				clicked = true;	
 		
 				//System.out.println(pair[0] + "," + pair[1]);
-			}
-		}		
+			}		
 	}
 	public void mouseReleased(MouseEvent e) {
 	}
@@ -228,7 +202,6 @@ public class Chess extends Canvas implements Runnable, MouseListener {
 	}
 
 	public void tick() {
-		if(gameState == STATE.PLAYING) {
 			for(int i=0; i<handler.object.size(); i++){
 				if(handler.object.get(i).getClass().getName().equals("Pawn")){
 					Object obj = Piece.class.cast(handler.object.get(i));
@@ -305,7 +278,6 @@ public class Chess extends Canvas implements Runnable, MouseListener {
 				}
 			}
 			handler.tick();
-		}
 	}
 
 	public void isBlackInCheck(){
@@ -371,10 +343,6 @@ public class Chess extends Canvas implements Runnable, MouseListener {
 		g.setColor(Color.WHITE);
 		g.fillRect(0, 0, 710, 580);
 
-		if(gameState == STATE.MENU) {
-			g.drawImage(image, 0, 0, this);
-		}
-		if(gameState == STATE.PLAYING) {
 			g.setColor(Color.BLACK);
 
 			Color darkSpot = new Color(125,135,150);
@@ -581,7 +549,6 @@ public class Chess extends Canvas implements Runnable, MouseListener {
 		}
 		if(whiteCheckmated){
 			g.drawString("BLACK WINS!", 225, 250);
-		}
 		}
 
 		g.dispose();
