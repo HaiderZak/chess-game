@@ -13,5 +13,7 @@ https://user-images.githubusercontent.com/37321974/132262534-2372f501-b1d2-4a3c-
 $ git clone https://github.com/HaiderZak/chess-game.git
 
 $ java -jar chess.jar
+
+OR just double-click chess.jar
 ```
 
